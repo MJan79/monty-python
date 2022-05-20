@@ -1,0 +1,54 @@
+play = True
+while play == True:
+  import random
+  from hangman_art import stages, logo
+  from hangman_words import word_list
+  from os import system,name
+  def clear():
+      # for windows
+      if name == 'nt':
+          _ = system('cls')
+      # for mac and linux(here, os.name is 'posix')
+      else:
+          _ = system('clear')
+  clear()
+  print(logo)
+  game_is_finished = False
+  lives = len(stages) - 1
+  
+  chosen_word = random.choice(word_list)
+  word_length = len(chosen_word)
+  
+  display = []
+  for _ in range(word_length):
+      display += "_"
+  
+  while not game_is_finished:
+      guess = input("Guess a letter: ").lower()
+      clear()
+  
+      if guess in display:
+          print(f"You've already guessed {guess}")
+  
+      for position in range(word_length):
+          letter = chosen_word[position]
+          if letter == guess:
+              display[position] = letter
+      print(f"{' '.join(display)}")
+  
+      if guess not in chosen_word:
+          print(f"You guessed {guess}, that's not in the word. You lose a life.")
+          lives -= 1
+          if lives == 0:
+              game_is_finished = True
+              print("You lose.")
+      
+      if not "_" in display:
+          game_is_finished = True
+          print("You win.")
+    
+      print(stages[lives])
+  again = input("Again? Y/N\n").lower()
+  if again != "y":
+    play = False
+  
