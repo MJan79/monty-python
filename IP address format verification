@@ -1,0 +1,17 @@
+import ipaddress
+
+targets_list=[]
+parse_ip=False
+while not parse_ip:
+  targets = input("Enter target(s) IP addresses separated by ','\n")
+
+  targets_list = targets.split(",")
+  print(targets_list)
+
+  try:
+    for item in targets_list:
+      ipaddress.ip_address(item)
+      parse_ip = True
+  except:   
+    print(f"Invalid IP format")
+    parse_ip = False
